@@ -12,4 +12,4 @@ License
 
 Copyright &copy;2016 Ed Carrel. Released under the MIT License.
 
-See [License](LICENSE.TXT) for details.
+See [License](LICENSE.txt) for details.
