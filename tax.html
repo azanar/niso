@@ -1,0 +1,68 @@
+<html>
+<head>
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js"></script>
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+<script type="application/javascript" src="tax.js"></script>
+<title>ISO/NSO comparison tool</title>
+</head>
+<body>
+<form action="#">
+    <h4>Tax Stuff</h4>
+    <label>Adjusted Gross Income (Form 1040 line 37):</label>
+    <input type='text' id='agi' value='150000'/>
+    <br/>
+    <label>Taxable Income (Form 1040 line 43):</label>
+    <input type='text' id='ti' value='150000'/>
+    <br/>
+    <label>Alternative Minimum Taxable Income(Form 6251 line 28):</label>
+    <input type='text' id='amti' value='150000'/>
+    <br/>
+    <label>Filing As</label>
+    <select id='filing_as'>
+        <option value='single' selected>Single</option>
+        <option value='married-joint'>Married, filing jointly</option>
+        <option value='married-separate'>Married, filing separately</option>
+        <option value='head-of-household'>Head of Household</option>
+    </select>
+
+    <h4>Stock Stuff:</h4>
+    <label>Shares:</label>
+    <input type='text' id='shares' value='1000'/>
+    <br/>
+    <label>Strike:</label>
+    <input type='text' id='strike' value='20'/>
+    <br/>
+    <label>409A value per share:</label>
+    <input type='text' id='fourohnine' value='20'/>
+    <br/>
+    <label>Market Value per share:</label>
+    <input type='text' id='market' value='30'/>
+    <br/>
+    <label>Bargain:</label>
+    <input type='text' readonly='true' id='bargain'/>
+    <br/>
+    <label>Value:</label>
+    <input type='text' readonly='true' id='value'/>
+<h6>ISO Stuff:</h6>
+    <div>
+        <label>Basis:</label>
+        <input type='text' readonly='true' id='iso_basis'/>
+        <label>Additonal Tax At Exercise:</label>
+        <input type='text' readonly='true' id='iso_ex_tax'/>
+        <label>Cap Gains Tax At Sale:</label>
+        <input type='text' readonly='true' id='iso_cap_tax'/>
+    </div>
+    <h6>NSO Stuff:</h6>
+    <div>
+        <label>Basis:</label>
+        <input type='text' readonly='true' id='nso_basis'/>
+        <label>Additonal Tax At Exercise:</label>
+        <input type='text' readonly='true' id='nso_ex_tax'/>
+        <label>Cap Gains Tax At Sale:</label>
+        <input type='text' readonly='true' id='nso_cap_tax'/>
+    </div>
+
+</form>
+</body>
+</html>
