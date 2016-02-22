@@ -62,7 +62,13 @@
         <label>Cap Gains Tax At Sale:</label>
         <input type='text' readonly='true' id='nso_cap_tax'/>
     </div>
-
+    <button id="submit">Calculate!</button>
+    <script type="application/javascript">
+        $('#submit').on('click', function(event) { 
+            calc(); 
+            event.stopPropagation(); 
+        });
+    </script>
 </form>
 </body>
 </html>
