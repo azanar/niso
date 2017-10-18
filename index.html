@@ -1,80 +1,236 @@
 <html>
-<head>
-<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js"></script>
-<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
-<script type="application/javascript" src="tax.js"></script>
-<title>ISO/NSO comparison tool</title>
-</head>
-<body>
-<h2>An ISO/NSO comparison tool</h2>
-<b>NOTE: This tool is for informational purposes only and does <i>not</i> constitute tax advice. It is provided with no warranty or guarantee of any kind, and is not meant to replace the advice of a qualified tax professional.</b>
-<form action="#">
-    <h4>Tax Stuff</h4>
-    <label>Adjusted Gross Income (Form 1040 line 37):</label>
-    <input type='text' id='agi' value='50000'/>
-    <br/>
-    <label>Taxable Income (Form 1040 line 43):</label>
-    <input type='text' id='ti' value='50000'/>
-    <br/>
-    <label>Alternative Minimum Taxable Income(Form 6251 line 28):</label>
-    <input type='text' id='amti' value='50000'/>
-    <br/>
-    <label>Filing As</label>
-    <select id='filing_as'>
-        <option value='single' selected>Single</option>
-        <option value='married-joint'>Married, filing jointly</option>
-        <option value='married-separate'>Married, filing separately</option>
-        <option value='head-of-household'>Head of Household</option>
-    </select>
+    <head>
+        <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.22/require.min.js"></script>
+        <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+        <script type="application/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-beta1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        <script type="application/javascript" src="tax.js"></script>
+        <title>ISO/NSO comparison tool</title>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h2>NISO</h2>
+            <h4>An ISO/NSO comparison tool</h4>
+            <b>NOTE: This tool is for informational purposes only and does <i>not</i> constitute tax advice. It is provided with no warranty or guarantee of any kind, and is not meant to replace the advice of a qualified tax professional.</b>
+            <form action="#">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Grants</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Existing Grants</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <tr>
+                                        <th>
+                                            Grant Date
+                                        </th>
+                                        <th>
+                                            Vested Shares
+                                        </th>
+                                        <th>
+                                            Exercised Shares
+                                        </th>
+                                        <th>
+                                            Current Value
+                                        </th>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>New Grant</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Shares:</label>
+                                            <input class="form-control" type='text' id='shares' value='1000'/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Grant Date:</label>
+                                            <input class="form-control" type='text' id='grant'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Strike Price ($):</label>
+                                            <input class="form-control" type='text' id='strike' value='20'/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Grant Type:</label>
+                                            <select class='form-control' id='type'>
+                                                <option value='iso'>Incentive Stock Options (ISOs)</option>
+                                                <option value='ciso'>Converting Incentive Stock Options (ISOs)</option>
+                                                <option value='nso' selected>Non-qualified Stock Options (NSOs)</option>
+                                                <option value='rsu'>Restricted Stock Units (RSUs)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Vesting Schedule</label>
+                                            <select class="form-control" id='vesting'>
+                                                <option value='48' selected>48 Months</option>
+                                                <option value='60'>60 Months</option>
+                                                <option value='other'>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Cliff</label>
+                                            <select class='form-control' id='cliff'>
+                                                <option value=''>None</option>
+                                                <option value='12' selected>1 Year</option>
+                                                <option value='other'>Other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-1">
+                                        <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        Add
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Cap Table</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Pre-money Valuation:</label>
+                                    <input class="form-control" type='text' id='shares' value='1000'/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Invested Amount ($):</label>
+                                    <input class="form-control" type='text' id='shares' value='1000'/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Round Date:</label>
+                                    <input class="form-control" type='text' id='grant'/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Preference</label>
+                                    <select class='form-control' id='cliff'>
+                                        <option value='participating'>Participating Preferred</option>
+                                        <option value='non-participating' selected>Non-participating Preferred</option>
+                                        <option value='common'>Common</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Rounds</h5>
+                            </div>
+                            <div class="card-body">
+                            </div>
+                        </div>
+                        <label>409(a) value per share:</label>
+                        <input type='text' id='fourohnine' value='20'/>
+                        <br/>
+                        <label>Market Value per share:</label>
+                        <input type='text' id='market' value='30'/>
+                        <br/>
+                        <label>Bargain:</label>
+                        <input type='text' readonly='true' id='bargain'/>
+                        <br/>
+                        <label>Value:</label>
+                        <input type='text' readonly='true' id='value'/>
+                        <h4>Outcome:</h4>
+                        <h6>ISO Stuff:</h6>
+                        <div>
+                            <label>Basis:</label>
+                            <input type='text' readonly='true' id='iso_basis'/>
+                            <label>Additonal Tax At Exercise:</label>
+                            <input type='text' readonly='true' id='iso_ex_tax'/>
+                            <label>Cap Gains Tax At Sale:</label>
+                            <input type='text' readonly='true' id='iso_cap_tax'/>
+                        </div>
+                        <h6>NSO Stuff:</h6>
+                        <div>
+                            <label>Basis:</label>
+                            <input type='text' readonly='true' id='nso_basis'/>
+                            <label>Additonal Tax At Exercise:</label>
+                            <input type='text' readonly='true' id='nso_ex_tax'/>
+                            <label>Cap Gains Tax At Sale:</label>
+                            <input type='text' readonly='true' id='nso_cap_tax'/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Tax Stuff</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Adjusted Gross Income (Form 1040 line 37):</label>
+                            <input type='text' id='agi' value='50000'/>
+                        </div>
+                        <div class="form-group">
+                            <label>Taxable Income (Form 1040 line 43):</label>
+                            <input type='text' id='ti' value='50000'/>
+                        </div>
+                        <div class="form-group">
+                            <label>Alternative Minimum Taxable Income(Form 6251 line 28):</label>
+                            <input type='text' id='amti' value='50000'/>
+                        </div>
+                        <label>Filing As</label>
+                        <select id='filing_as'>
+                            <option value='single' selected>Single</option>
+                            <option value='married-joint'>Married, filing jointly</option>
+                            <option value='married-separate'>Married, filing separately</option>
+                            <option value='head-of-household'>Head of Household</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card">
+                    <button id="submit">Calculate!</button>
+                </div>
+                <script type="application/javascript">
+$('#submit').on('click', function(event) { 
+    calc(); 
+    event.stopPropagation(); 
+});
+                </script>
+        </div>
+            </form>
+            Copyright (c) 2017 Ed Carrel. Released under the MIT License.
+            <br />
 
-    <h4>Stock Stuff:</h4>
-    <label>Shares:</label>
-    <input type='text' id='shares' value='1000'/>
-    <br/>
-    <label>Strike:</label>
-    <input type='text' id='strike' value='20'/>
-    <br/>
-    <label>409(a) value per share:</label>
-    <input type='text' id='fourohnine' value='20'/>
-    <br/>
-    <label>Market Value per share:</label>
-    <input type='text' id='market' value='30'/>
-    <br/>
-    <label>Bargain:</label>
-    <input type='text' readonly='true' id='bargain'/>
-    <br/>
-    <label>Value:</label>
-    <input type='text' readonly='true' id='value'/>
-    <h4>Outcome:</h4>
-<h6>ISO Stuff:</h6>
-    <div>
-        <label>Basis:</label>
-        <input type='text' readonly='true' id='iso_basis'/>
-        <label>Additonal Tax At Exercise:</label>
-        <input type='text' readonly='true' id='iso_ex_tax'/>
-        <label>Cap Gains Tax At Sale:</label>
-        <input type='text' readonly='true' id='iso_cap_tax'/>
-    </div>
-    <h6>NSO Stuff:</h6>
-    <div>
-        <label>Basis:</label>
-        <input type='text' readonly='true' id='nso_basis'/>
-        <label>Additonal Tax At Exercise:</label>
-        <input type='text' readonly='true' id='nso_ex_tax'/>
-        <label>Cap Gains Tax At Sale:</label>
-        <input type='text' readonly='true' id='nso_cap_tax'/>
-    </div>
-    <button id="submit">Calculate!</button>
-    <script type="application/javascript">
-        $('#submit').on('click', function(event) { 
-            calc(); 
-            event.stopPropagation(); 
-        });
-    </script>
-</form>
-Copyright (c) 2016 Ed Carrel. Released under the MIT License.
-
-Source code available on GitHub: <a href="https://github.com/azanar/niso">Niso</a>
-</body>
+            Source code available on GitHub: <a href="https://github.com/azanar/niso">Niso</a>
+            </div>
+    </body>
 </html>
